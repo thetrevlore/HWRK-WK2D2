@@ -1,0 +1,34 @@
+<% persisted = cat.persisted? %>
+
+<% url_request = persisted ? cat_url(cat) : cats_url %>
+
+<form action="<%= url_request %>" method="post">
+  <% if persisted %>
+    <input type="hidden" name="_method" value="patch"> <!-- value patch is passed to the method above -->
+    <!-- when (client) submits form, server tells client to make post request to cats_url
+    this calls createaction from cat controller with form data in body for params  -->
+  <% end %>
+
+  <label for="name">Name:</label>
+  <input id="name" type="text" name="cat[name]" value="<%= cat.name %>">
+  <br>
+  <label for="sex">Sex:</label>
+  <input id="sex" type="radio" checked="<%= cat.sex == "F" %>" name="cat[sex]" value="F"> Female
+  <input type="radio" checked="<%= cat.sex == "M" %>" name="cat[sex]" value="M"> Male
+  <br>
+  <label for="color">Color:</label> <!-- label for picks first option for select -->
+  <select id="color" name="cat[color]">
+    <option value="Please pick a color" disabled="true" selected="<%= !persisted %>">-Pick a color-</option>
+    <% Cat::COLORS.each do |color| %>
+      <option selected="<%= cat.color == color %>" value="<%= color %>"><%= color %></option>
+    <% end %>
+  </select>
+  <br>
+  <label for="Birth Date">Birth Date:</label>
+  <input id="Birth Date" type="date" name="cat[birth_date]" value="<%= cat.birth_date %>" >
+  <br>
+  <label for="description">Description:</label>
+  <textarea name="cat[description]" ><%= cat.description %></textarea>
+  <br>
+  <input type="submit" name="" value="Submit">
+</form>

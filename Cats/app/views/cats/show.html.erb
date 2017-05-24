@@ -1,0 +1,15 @@
+<h4>Check out your kitty!</h4>
+
+<table>
+  <tr>
+    <th>Trait</th>
+    <th>Description</th>
+  </tr>
+  <% @cat.attributes.to_a[1...-2].each do |attr_name, value| %>
+  <!-- drop(1) to get rid of id -->
+    <tr>
+      <td><%= attr_name %></td>
+      <td><%= value %></td>
+    </tr>
+  <% end %>
+</table>
